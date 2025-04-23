@@ -1,43 +1,18 @@
-const students = [
-  {
-    id: 1,
-    name: 'Marco Lanci',
-    age: 32,
-    class: '3C'
-  },
-  {
-    id: 2,
-    name: 'Mario Banfi',
-    age: 34,
-    class: '4A'
-  },
-  {
-    id: 3,
-    name: 'Luigi Banzi',
-    age: 33,
-    class: '5B'
-  },
-];
+function creaThrottler(fn, limite) {
+  let ultimoTempo = 0;
 
-// Recupera la classe dello studente 'Marco Lanci'
-const studente = students.find((student)=>{
-  return student.name === 'Marco Lanci'
-})
-console.log(studente.class);
+  return function(...args) {
+    const ora = Date.now();
+    if (ora - ultimoTempo >= limite) {
+      ultimoTempo = ora;
+      fn(...args);
+    }
+  };
+}
 
-// Risultato: '3C'
+const throttledLog = creaThrottler(() => console.log("Eseguito!"), 2000);
 
-// versione compata
- 
-const studente2 = students.find(student=>student.name === 'Marco Lanci')
-console.log(studente2.class);
-
-let classe
-// versione FOR
- for(let i = 0; i < students.length; i++){
-  if(students[i].name === 'Marco Lanci'){
-    classe = students[i].class
-  }
- }
- console.log(classe);
- 
+throttledLog(); // ✅ Eseguito subito
+throttledLog(); // ❌ Ignorato se chiamato entro 2 secondi
+setTimeout(throttledLog, 2000); // ✅ Eseguito dopo 2.5 secondi
+setTimeout(throttledLog, 1000); // ✅ Eseguito dopo 2.5 secondi

@@ -1,43 +1,36 @@
-const students = [
-  {
-    id: 1,
-    name: 'Marco Lanci',
-    age: 32,
-    class: '3C'
-  },
-  {
-    id: 2,
-    name: 'Mario Banfi',
-    age: 34,
-    class: '4A'
-  },
-  {
-    id: 3,
-    name: 'Luigi Banzi',
-    age: 33,
-    class: '5B'
-  },
-];
+// function stampaOgniSecondo (numero){
+//   console.log(numero);
+  
+//   return function(){
+//   setInterval(() => {
+//     if(numero > 1){
+//       numero--
+//   console.log(numero);
+//     }else{
+//       clearInterval(numero);
+//       console.log("Tempo scaduto!");
+      
+//     }
+//   }, 1000);
+//  };
+// }
+// stampaOgniSecondo(5)()
 
-// Recupera la classe dello studente 'Marco Lanci'
-const studente = students.find((student)=>{
-  return student.name === 'Marco Lanci'
-})
-console.log(studente.class);
+function stampaOgniSecondo(numero) {
+  console.log(numero);
 
-// Risultato: '3C'
+  return function() {
+    const id = setInterval(() => {
+      numero--;
+      if (numero > 0) {
+        console.log(numero);
+      } else {
+        clearInterval(id);
+        console.log("Tempo scaduto!");
+      }
+    }, 1000);
+  };
+}
 
-// versione compata
- 
-const studente2 = students.find(student=>student.name === 'Marco Lanci')
-console.log(studente2.class);
+stampaOgniSecondo(5)()
 
-let classe
-// versione FOR
- for(let i = 0; i < students.length; i++){
-  if(students[i].name === 'Marco Lanci'){
-    classe = students[i].class
-  }
- }
- console.log(classe);
- 
